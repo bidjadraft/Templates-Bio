@@ -3,236 +3,264 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>النهار أونلاين – أول موقع إخباري في الجزائر</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <title>أخبار تلقائية من GitHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
-      font-family: 'Cairo', Arial, sans-serif;
-      background: #fff;
-      color: #222;
+      font-family: "Cairo", "Segoe UI", "Arial", sans-serif;
+      background: #18181b;
+      color: #e5e7eb;
+      line-height: 1.6;
     }
-    header {
-      background: #003366;
-      color: #fff;
-      padding: 10px 0 8px 0;
-      text-align: center;
-      font-size: 1.1em;
-      font-weight: 700;
-    }
-    .navbar {
-      background: #003366;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 10px;
-    }
-    .navbar .icon {
-      font-size: 1.6em;
-      color: #fff;
-      margin: 0 6px;
-      cursor: pointer;
-    }
-    .navbar .logo {
-      font-size: 2em;
-      font-weight: bold;
-      letter-spacing: 2px;
-      color: #fff;
-      margin: 0 8px;
-      font-family: 'Cairo', Arial, sans-serif;
-    }
-    .navbar .live {
-      background: #2563eb;
-      color: #fff;
-      border-radius: 8px;
-      padding: 2px 10px;
-      font-size: 1em;
-      margin-right: 7px;
-      font-weight: 700;
-    }
-    .navbar .spacer {
-      flex: 1;
-    }
-    .video-section {
-      background: #eee;
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      margin: 18px 10px 18px 10px;
-    }
-    .video-section img {
-      width: 100%;
-      display: block;
-      height: 170px;
-      object-fit: cover;
-    }
-    .video-section .video-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 54px;
-      height: 54px;
-      font-size: 2.2em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      outline: none;
-      z-index: 2;
-    }
-    .news-list {
+    .main-news-block {
       max-width: 600px;
-      margin: 0 auto;
-      padding: 0 8px;
+      margin: 32px auto 32px auto;
+    }
+    .main-news-featured {
+      background: #1f1f25;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px #0008;
+      margin-bottom: 18px;
+      position: relative;
       display: flex;
       flex-direction: column;
-      gap: 18px;
     }
-    .news-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px #0001;
-      padding: 8px 6px;
-      position: relative;
-    }
-    .news-thumb-wrap {
-      position: relative;
-      min-width: 90px;
-      width: 90px;
-      height: 60px;
-    }
-    .news-thumb {
-      width: 90px;
-      height: 60px;
+    .main-news-img {
+      width: 100%;
+      height: 210px;
       object-fit: cover;
-      border-radius: 7px;
       display: block;
     }
-    .news-badge {
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      background: #2563eb;
+    .main-news-content {
+      padding: 16px 14px 12px 14px;
+    }
+    .main-news-title {
+      font-size: 1.25em;
       color: #fff;
-      font-size: 0.92em;
-      padding: 2px 9px;
-      border-radius: 7px;
       font-weight: 700;
-      box-shadow: 0 1px 6px #0002;
-    }
-    .news-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .news-title {
-      font-size: 1.09em;
-      font-weight: 700;
-      color: #222;
-      margin: 0 0 5px 0;
+      margin: 0 0 8px 0;
       text-decoration: none;
-      line-height: 1.45;
       display: block;
+      line-height: 1.5;
       transition: color 0.2s;
     }
-    .news-title:hover {
-      color: #2563eb;
+    .main-news-title:hover {
+      color: #60a5fa;
     }
-    .news-meta {
-      font-size: 0.93em;
-      color: #2563eb;
+    .main-news-meta {
+      color: #60a5fa;
+      font-size: 1em;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    .main-news-date {
+      color: #a1a1aa;
+      font-size: 0.95em;
+    }
+    .main-news-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.95em;
+      padding: 4px 13px;
+      border-radius: 9px;
+      z-index: 2;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #0003;
+    }
+    .mini-articles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+    }
+    .mini-article-row {
+      display: flex;
+      align-items: flex-start;
+      background: #1f1f25;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #0004;
+      padding: 10px 10px 10px 0;
+      transition: box-shadow 0.2s, transform 0.2s;
+      min-height: 80px;
+    }
+    .mini-article-row:hover {
+      box-shadow: 0 8px 24px #60a5fa22;
+      transform: translateY(-2px) scale(1.01);
+    }
+    .mini-article-thumb-wrap {
+      position: relative;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .mini-article-thumb {
+      width: 110px;
+      min-width: 110px;
+      height: 70px;
+      object-fit: cover;
+      background: #23232a;
+      border-radius: 8px;
+      display: block;
+    }
+    .mini-article-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.85em;
+      padding: 2px 9px;
+      border-radius: 7px;
+      z-index: 2;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #0003;
+    }
+    .mini-article-info {
+      flex: 1;
+      padding: 0 0 0 0;
+      margin-right: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .mini-article-title {
+      font-size: 1.09em;
+      font-weight: 700;
+      color: #e5e7eb;
+      margin: 0 0 6px 0;
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.45;
+      display: block;
+    }
+    .mini-article-title:hover {
+      color: #60a5fa;
+    }
+    .mini-article-meta {
+      font-size: 0.95em;
+      color: #60a5fa;
       margin-left: 8px;
       font-weight: 500;
       display: inline-block;
     }
-    .news-date {
+    .mini-article-date {
       font-size: 0.9em;
-      color: #888;
+      color: #a1a1aa;
       font-weight: 400;
     }
     @media (max-width: 600px) {
-      .news-list {
-        gap: 12px;
+      .main-news-block {
+        max-width: 100%;
+        padding: 0 4px;
       }
-      .news-thumb-wrap, .news-thumb {
-        width: 65px;
-        min-width: 65px;
+      .main-news-img {
+        height: 140px;
+      }
+      .main-news-content {
+        padding: 10px 7px 8px 7px;
+      }
+      .main-news-title {
+        font-size: 1em;
+      }
+      .mini-articles-list {
+        gap: 14px;
+      }
+      .mini-article-row {
+        min-height: 54px;
+        padding: 6px 6px 6px 0;
+      }
+      .mini-article-thumb {
+        width: 70px;
+        min-width: 70px;
         height: 44px;
       }
-      .video-section img {
-        height: 110px;
+      .mini-article-info {
+        margin-right: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    النهار أونلاين – أول موقع إخباري في الجزائر
-  </header>
-  <nav class="navbar">
-    <span class="icon">&#9788;</span>
-    <span class="icon">&#9776;</span>
-    <span class="logo">النهار ONLINE</span>
-    <span class="live">LIVE</span>
-    <span class="icon">&#128246;</span>
-  </nav>
-  <div class="video-section">
-    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fit=crop&w=600&q=80" alt="فيديو"/>
-    <button class="video-btn">&#9658;</button>
+  <div class="main-news-block" id="main-news-block">
+    <!-- سيتم توليد الأخبار تلقائياً هنا -->
   </div>
-  <div class="news-list">
-    <div class="news-item">
-      <div class="news-thumb-wrap">
-        <img class="news-thumb" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?fit=crop&w=300&q=80" alt="خبر"/>
-        <span class="news-badge">لقب جديد</span>
-      </div>
-      <div class="news-info">
-        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-super-cup" class="news-title">
-          كرة اليد.. مولودية برج بوعريريج تتوج بكأس "السوبر"
-        </a>
-        <div>
-          <span class="news-meta">الرياضة</span>
-          <span class="news-date">09 ماي</span>
-        </div>
-      </div>
-    </div>
-    <div class="news-item">
-      <div class="news-thumb-wrap">
-        <img class="news-thumb" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=300&q=80" alt="خبر"/>
-      </div>
-      <div class="news-info">
-        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-gouri" class="news-title">
-          غوري يتحدث عن علاقته بمدربه دي زيربي
-        </a>
-        <div>
-          <span class="news-meta">الرياضة</span>
-          <span class="news-date">09 ماي</span>
-        </div>
-      </div>
-    </div>
-    <div class="news-item">
-      <div class="news-thumb-wrap">
-        <img class="news-thumb" src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=300&q=80" alt="خبر"/>
-      </div>
-      <div class="news-info">
-        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-rouissat" class="news-title">
-          مستقبل الرويسات يحافظ على صدارة القسم الثاني هواة وسط شرق
-        </a>
-        <div>
-          <span class="news-meta">الرياضة</span>
-          <span class="news-date">09 ماي</span>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <script>
+    const githubUser = "bidjadraft";
+    const repo = "Templates-bio";
+    const folder = "_posts";
+    fetch(`https://api.github.com/repos/${githubUser}/${repo}/contents/${folder}`)
+      .then(res => res.json())
+      .then(files => {
+        files = files
+          .filter(file => file.name.endsWith('.md'))
+          .sort((a, b) => b.name.localeCompare(a.name));
+        if (files.length === 0) return;
+
+        Promise.all(files.map(file =>
+          fetch(file.download_url).then(r => r.text()).then(md => ({file, md}))
+        )).then(items => {
+          let news = items.map(({file, md}) => {
+            let title = md.match(/title:\s*["']?(.+?)["']?\s*$/m);
+            let image = md.match(/image:\s*["']?(.+?)["']?\s*$/m);
+            let category = md.match(/category:\s*["']?(.+?)["']?\s*$/m);
+            let badge = md.match(/badge:\s*["']?(.+?)["']?\s*$/m);
+            let date = md.match(/date:\s*["']?(.+?)["']?\s*$/m);
+
+            title = title ? title[1] : file.name.replace('.md', '');
+            image = image ? image[1] : "https://via.placeholder.com/600x300?text=خبر";
+            category = category ? category[1] : "غير مصنف";
+            badge = badge ? badge[1] : "";
+            date = date ? date[1].split('T')[0] : "";
+
+            // رابط صفحة الخبر بدون .md
+            let pageUrl = `https://${githubUser}.github.io/${repo}/${folder}/${file.name.replace(/\.md$/, "")}`;
+
+            return {
+              title, image, category, badge, date, pageUrl
+            };
+          });
+
+          // أول خبر رئيسي
+          let first = news[0];
+          let mainHtml = `
+            <div class="main-news-featured">
+              <img class="main-news-img" src="${first.image}" alt="صورة الخبر الرئيسي"/>
+              ${first.badge ? `<span class="main-news-badge">${first.badge}</span>` : ""}
+              <div class="main-news-content">
+                <a href="${first.pageUrl}" class="main-news-title" target="_blank">${first.title}</a>
+                <span class="main-news-meta">${first.category}</span>
+                <span class="main-news-date">${first.date}</span>
+              </div>
+            </div>
+          `;
+
+          // باقي الأخبار المصغرة
+          let miniHtml = news.slice(1).map(n => `
+            <div class="mini-article-row">
+              <div class="mini-article-thumb-wrap">
+                <img class="mini-article-thumb" src="${n.image}" alt="صورة الخبر"/>
+                ${n.badge ? `<span class="mini-article-badge">${n.badge}</span>` : ""}
+              </div>
+              <div class="mini-article-info">
+                <a href="${n.pageUrl}" class="mini-article-title" target="_blank">${n.title}</a>
+                <div>
+                  <span class="mini-article-meta">${n.category}</span>
+                  <span class="mini-article-date">${n.date}</span>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
+          document.getElementById('main-news-block').innerHTML = mainHtml + `<div class="mini-articles-list">${miniHtml}</div>`;
+        });
+      });
+  </script>
 </body>
 </html>
