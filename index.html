@@ -20,24 +20,28 @@
       font-size: 1.1em;
       font-weight: 700;
     }
-    .logo-bar {
+    .navbar {
       background: #003366;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 6px 10px;
     }
-    .logo-bar .logo {
+    .navbar .icon {
+      font-size: 1.6em;
+      color: #fff;
+      margin: 0 6px;
+      cursor: pointer;
+    }
+    .navbar .logo {
       font-size: 2em;
       font-weight: bold;
       letter-spacing: 2px;
       color: #fff;
+      margin: 0 8px;
+      font-family: 'Cairo', Arial, sans-serif;
     }
-    .logo-bar .menu {
-      font-size: 1.6em;
-      color: #fff;
-    }
-    .logo-bar .live {
+    .navbar .live {
       background: #2563eb;
       color: #fff;
       border-radius: 8px;
@@ -46,6 +50,9 @@
       margin-right: 7px;
       font-weight: 700;
     }
+    .navbar .spacer {
+      flex: 1;
+    }
     .video-section {
       background: #eee;
       position: relative;
@@ -53,7 +60,7 @@
       overflow: hidden;
       margin: 18px 10px 18px 10px;
     }
-    .video-section img, .video-section video {
+    .video-section img {
       width: 100%;
       display: block;
       height: 170px;
@@ -68,16 +75,17 @@
       color: #fff;
       border: none;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 2em;
+      width: 54px;
+      height: 54px;
+      font-size: 2.2em;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       outline: none;
+      z-index: 2;
     }
-    .main-news-list {
+    .news-list {
       max-width: 600px;
       margin: 0 auto;
       padding: 0 8px;
@@ -85,7 +93,7 @@
       flex-direction: column;
       gap: 18px;
     }
-    .main-news-item {
+    .news-item {
       display: flex;
       gap: 12px;
       align-items: flex-start;
@@ -95,23 +103,23 @@
       padding: 8px 6px;
       position: relative;
     }
-    .main-news-thumb-wrap {
+    .news-thumb-wrap {
       position: relative;
       min-width: 90px;
       width: 90px;
       height: 60px;
     }
-    .main-news-thumb {
+    .news-thumb {
       width: 90px;
       height: 60px;
       object-fit: cover;
       border-radius: 7px;
       display: block;
     }
-    .main-news-badge {
+    .news-badge {
       position: absolute;
-      bottom: 5px;
-      right: 5px;
+      top: 7px;
+      right: 7px;
       background: #2563eb;
       color: #fff;
       font-size: 0.92em;
@@ -120,13 +128,13 @@
       font-weight: 700;
       box-shadow: 0 1px 6px #0002;
     }
-    .main-news-info {
+    .news-info {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
-    .main-news-title {
+    .news-title {
       font-size: 1.09em;
       font-weight: 700;
       color: #222;
@@ -136,31 +144,31 @@
       display: block;
       transition: color 0.2s;
     }
-    .main-news-title:hover {
+    .news-title:hover {
       color: #2563eb;
     }
-    .main-news-meta {
+    .news-meta {
       font-size: 0.93em;
       color: #2563eb;
       margin-left: 8px;
       font-weight: 500;
       display: inline-block;
     }
-    .main-news-date {
+    .news-date {
       font-size: 0.9em;
       color: #888;
       font-weight: 400;
     }
     @media (max-width: 600px) {
-      .main-news-list {
+      .news-list {
         gap: 12px;
       }
-      .main-news-thumb-wrap, .main-news-thumb {
+      .news-thumb-wrap, .news-thumb {
         width: 65px;
         min-width: 65px;
         height: 44px;
       }
-      .video-section img, .video-section video {
+      .video-section img {
         height: 110px;
       }
     }
@@ -170,56 +178,58 @@
   <header>
     النهار أونلاين – أول موقع إخباري في الجزائر
   </header>
-  <div class="logo-bar">
-    <span class="menu">&#9776;</span>
+  <nav class="navbar">
+    <span class="icon">&#9788;</span>
+    <span class="icon">&#9776;</span>
     <span class="logo">النهار ONLINE</span>
     <span class="live">LIVE</span>
-  </div>
+    <span class="icon">&#128246;</span>
+  </nav>
   <div class="video-section">
     <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fit=crop&w=600&q=80" alt="فيديو"/>
     <button class="video-btn">&#9658;</button>
   </div>
-  <div class="main-news-list">
-    <div class="main-news-item">
-      <div class="main-news-thumb-wrap">
-        <img class="main-news-thumb" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?fit=crop&w=300&q=80" alt="خبر"/>
-        <span class="main-news-badge">لقب جديد</span>
+  <div class="news-list">
+    <div class="news-item">
+      <div class="news-thumb-wrap">
+        <img class="news-thumb" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?fit=crop&w=300&q=80" alt="خبر"/>
+        <span class="news-badge">لقب جديد</span>
       </div>
-      <div class="main-news-info">
-        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-super-cup.md" class="main-news-title" target="_blank">
+      <div class="news-info">
+        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-super-cup.md" class="news-title" target="_blank">
           كرة اليد.. مولودية برج بوعريريج تتوج بكأس "السوبر"
         </a>
         <div>
-          <span class="main-news-meta">الرياضة</span>
-          <span class="main-news-date">09 ماي</span>
+          <span class="news-meta">الرياضة</span>
+          <span class="news-date">09 ماي</span>
         </div>
       </div>
     </div>
-    <div class="main-news-item">
-      <div class="main-news-thumb-wrap">
-        <img class="main-news-thumb" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=300&q=80" alt="خبر"/>
+    <div class="news-item">
+      <div class="news-thumb-wrap">
+        <img class="news-thumb" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=300&q=80" alt="خبر"/>
       </div>
-      <div class="main-news-info">
-        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-gouri.md" class="main-news-title" target="_blank">
+      <div class="news-info">
+        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-gouri.md" class="news-title" target="_blank">
           غوري يتحدث عن علاقته بمدربه دي زيربي
         </a>
         <div>
-          <span class="main-news-meta">الرياضة</span>
-          <span class="main-news-date">09 ماي</span>
+          <span class="news-meta">الرياضة</span>
+          <span class="news-date">09 ماي</span>
         </div>
       </div>
     </div>
-    <div class="main-news-item">
-      <div class="main-news-thumb-wrap">
-        <img class="main-news-thumb" src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=300&q=80" alt="خبر"/>
+    <div class="news-item">
+      <div class="news-thumb-wrap">
+        <img class="news-thumb" src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=300&q=80" alt="خبر"/>
       </div>
-      <div class="main-news-info">
-        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-rouissat.md" class="main-news-title" target="_blank">
+      <div class="news-info">
+        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-rouissat.md" class="news-title" target="_blank">
           مستقبل الرويسات يحافظ على صدارة القسم الثاني هواة وسط شرق
         </a>
         <div>
-          <span class="main-news-meta">الرياضة</span>
-          <span class="main-news-date">09 ماي</span>
+          <span class="news-meta">الرياضة</span>
+          <span class="news-date">09 ماي</span>
         </div>
       </div>
     </div>
