@@ -193,8 +193,9 @@
 
   <script>
     const githubUser = "bidjadraft";
-    const repo = "Templates-bio";
-    const folder = "_posts";
+    const repo = "Templates-Bio";
+    const folder = "news"; // <-- هنا التغيير
+
     fetch(`https://api.github.com/repos/${githubUser}/${repo}/contents/${folder}`)
       .then(res => res.json())
       .then(files => {
