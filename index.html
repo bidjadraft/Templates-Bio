@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>أخبار تلقائية من GitHub</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       margin: 0;
-      font-family: "Cairo", "Segoe UI", "Arial", sans-serif;
+      font-family: "Cairo", Arial, sans-serif;
       background: #18181b;
       color: #e5e7eb;
       line-height: 1.6;
@@ -17,6 +17,9 @@
     .main-news-block {
       max-width: 600px;
       margin: 32px auto 32px auto;
+    }
+    .main-news-featured, .mini-article-row {
+      cursor: pointer;
     }
     .main-news-featured {
       background: #1f1f25;
@@ -46,6 +49,7 @@
       display: block;
       line-height: 1.5;
       transition: color 0.2s;
+      cursor: pointer;
     }
     .main-news-title:hover {
       color: #60a5fa;
@@ -138,6 +142,7 @@
       transition: color 0.2s;
       line-height: 1.45;
       display: block;
+      cursor: pointer;
     }
     .mini-article-title:hover {
       color: #60a5fa;
@@ -154,26 +159,48 @@
       color: #a1a1aa;
       font-weight: 400;
     }
+    /* صفحة الخبر */
+    .news-view {
+      max-width: 700px;
+      margin: 32px auto 32px auto;
+      background: #1f1f25;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px #0008;
+      padding: 24px 18px;
+      color: #e5e7eb;
+    }
+    .news-view img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: block;
+    }
+    .news-view .back-btn {
+      display: inline-block;
+      margin-bottom: 16px;
+      background: #2563eb;
+      color: #fff;
+      border-radius: 8px;
+      padding: 7px 18px;
+      font-size: 1em;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .news-view .back-btn:hover {
+      background: #60a5fa;
+      color: #222;
+    }
     @media (max-width: 600px) {
-      .main-news-block {
+      .main-news-block, .news-view {
         max-width: 100%;
-        padding: 0 4px;
+        margin: 12px 0;
+        padding: 10px 2px;
       }
       .main-news-img {
         height: 140px;
-      }
-      .main-news-content {
-        padding: 10px 7px 8px 7px;
-      }
-      .main-news-title {
-        font-size: 1em;
-      }
-      .mini-articles-list {
-        gap: 14px;
-      }
-      .mini-article-row {
-        min-height: 54px;
-        padding: 6px 6px 6px 0;
       }
       .mini-article-thumb {
         width: 70px;
@@ -190,26 +217,61 @@
   <div class="main-news-block" id="main-news-block">
     <!-- سيتم توليد الأخبار تلقائياً هنا -->
   </div>
+  <div id="news-view" class="news-view" style="display:none"></div>
 
   <script>
     const githubUser = "bidjadraft";
     const repo = "Templates-bio";
     const folder = "_posts";
+
+    function renderNewsList(news) {
+      // أول خبر رئيسي
+      let first = news[0];
+      let mainHtml = `
+        <div class="main-news-featured" onclick="showNews('${first.file.name.replace(/'/g, "\\'")}')">
+          <img class="main-news-img" src="${first.image}" alt="صورة الخبر الرئيسي"/>
+          ${first.badge ? `<span class="main-news-badge">${first.badge}</span>` : ""}
+          <div class="main-news-content">
+            <span class="main-news-title">${first.title}</span>
+            <span class="main-news-meta">${first.category}</span>
+            <span class="main-news-date">${first.date}</span>
+          </div>
+        </div>
+      `;
+
+      // باقي الأخبار المصغرة
+      let miniHtml = news.slice(1).map(n => `
+        <div class="mini-article-row" onclick="showNews('${n.file.name.replace(/'/g, "\\'")}')">
+          <div class="mini-article-thumb-wrap">
+            <img class="mini-article-thumb" src="${n.image}" alt="صورة الخبر"/>
+            ${n.badge ? `<span class="mini-article-badge">${n.badge}</span>` : ""}
+          </div>
+          <div class="mini-article-info">
+            <span class="mini-article-title">${n.title}</span>
+            <div>
+              <span class="mini-article-meta">${n.category}</span>
+              <span class="mini-article-date">${n.date}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('main-news-block').innerHTML = mainHtml + `<div class="mini-articles-list">${miniHtml}</div>`;
+    }
+
     // جلب الملفات من GitHub
+    let allNews = [];
     fetch(`https://api.github.com/repos/${githubUser}/${repo}/contents/${folder}`)
       .then(res => res.json())
       .then(files => {
-        // ترتيب الأحدث أولاً حسب الاسم (يفترض أن الاسم يبدأ بالتاريخ)
         files = files
           .filter(file => file.name.endsWith('.md'))
           .sort((a, b) => b.name.localeCompare(a.name));
         if (files.length === 0) return;
 
-        // جلب محتوى كل ملف
         Promise.all(files.map(file =>
           fetch(file.download_url).then(r => r.text()).then(md => ({file, md}))
         )).then(items => {
-          // استخراج بيانات كل خبر
           let news = items.map(({file, md}) => {
             let title = md.match(/title:\s*["']?(.+?)["']?\s*$/m);
             let image = md.match(/image:\s*["']?(.+?)["']?\s*$/m);
@@ -224,44 +286,41 @@
             date = date ? date[1].split('T')[0] : "";
 
             return {
-              title, image, category, badge, date, file
+              title, image, category, badge, date, file, md
             };
           });
-
-          // أول خبر رئيسي
-          let first = news[0];
-          let mainHtml = `
-            <div class="main-news-featured">
-              <img class="main-news-img" src="${first.image}" alt="صورة الخبر الرئيسي"/>
-              ${first.badge ? `<span class="main-news-badge">${first.badge}</span>` : ""}
-              <div class="main-news-content">
-                <a href="https://github.com/${githubUser}/${repo}/blob/main/${folder}/${first.file.name}" class="main-news-title" target="_blank">${first.title}</a>
-                <span class="main-news-meta">${first.category}</span>
-                <span class="main-news-date">${first.date}</span>
-              </div>
-            </div>
-          `;
-
-          // باقي الأخبار المصغرة
-          let miniHtml = news.slice(1).map(n => `
-            <div class="mini-article-row">
-              <div class="mini-article-thumb-wrap">
-                <img class="mini-article-thumb" src="${n.image}" alt="صورة الخبر"/>
-                ${n.badge ? `<span class="mini-article-badge">${n.badge}</span>` : ""}
-              </div>
-              <div class="mini-article-info">
-                <a href="https://github.com/${githubUser}/${repo}/blob/main/${folder}/${n.file.name}" class="mini-article-title" target="_blank">${n.title}</a>
-                <div>
-                  <span class="mini-article-meta">${n.category}</span>
-                  <span class="mini-article-date">${n.date}</span>
-                </div>
-              </div>
-            </div>
-          `).join('');
-
-          document.getElementById('main-news-block').innerHTML = mainHtml + `<div class="mini-articles-list">${miniHtml}</div>`;
+          allNews = news;
+          renderNewsList(news);
         });
       });
+
+    // عرض خبر مفرد
+    function showNews(fileName) {
+      let news = allNews.find(n => n.file.name === fileName);
+      if (!news) return;
+      document.getElementById('main-news-block').style.display = 'none';
+      let content = news.md.replace(/^---[\s\S]+?---/, ''); // إزالة front matter
+      let html = `
+        <button class="back-btn" onclick="backToList()">&#8592; عودة للأخبار</button>
+        <h2>${news.title}</h2>
+        <div style="margin-bottom:12px;">
+          <span class="mini-article-meta">${news.category}</span>
+          <span class="mini-article-date">${news.date}</span>
+        </div>
+        <img src="${news.image}" alt="صورة الخبر" />
+        <div>${marked.parse(content)}</div>
+      `;
+      document.getElementById('news-view').innerHTML = html;
+      document.getElementById('news-view').style.display = 'block';
+      window.scrollTo(0,0);
+    }
+
+    // عودة للقائمة
+    function backToList() {
+      document.getElementById('news-view').style.display = 'none';
+      document.getElementById('main-news-block').style.display = 'block';
+      window.scrollTo(0,0);
+    }
   </script>
 </body>
 </html>
