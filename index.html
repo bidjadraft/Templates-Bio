@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>النهار أونلاين - عرض الأخبار</title>
+  <title>النهار أونلاين – أول موقع إخباري في الجزائر</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -95,12 +94,6 @@
       box-shadow: 0 2px 8px #0001;
       padding: 8px 6px;
       position: relative;
-      cursor: pointer;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .main-news-item:hover {
-      box-shadow: 0 8px 24px #60a5fa22;
-      transform: translateY(-2px) scale(1.01);
     }
     .main-news-thumb-wrap {
       position: relative;
@@ -142,7 +135,6 @@
       line-height: 1.45;
       display: block;
       transition: color 0.2s;
-      cursor: pointer;
     }
     .main-news-title:hover {
       color: #2563eb;
@@ -159,41 +151,6 @@
       color: #888;
       font-weight: 400;
     }
-    /* صفحة الخبر */
-    .news-view {
-      max-width: 700px;
-      margin: 32px auto 32px auto;
-      background: #f5f5f7;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px #0002;
-      padding: 24px 18px;
-      color: #222;
-      display: none;
-    }
-    .news-view img {
-      max-width: 100%;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: block;
-    }
-    .news-view .back-btn {
-      display: inline-block;
-      margin-bottom: 16px;
-      background: #2563eb;
-      color: #fff;
-      border-radius: 8px;
-      padding: 7px 18px;
-      font-size: 1em;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .news-view .back-btn:hover {
-      background: #60a5fa;
-      color: #222;
-    }
     @media (max-width: 600px) {
       .main-news-list {
         gap: 12px;
@@ -205,11 +162,6 @@
       }
       .video-section img, .video-section video {
         height: 110px;
-      }
-      .news-view {
-        max-width: 100%;
-        margin: 12px 0;
-        padding: 10px 2px;
       }
     }
   </style>
@@ -227,96 +179,50 @@
     <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fit=crop&w=600&q=80" alt="فيديو"/>
     <button class="video-btn">&#9658;</button>
   </div>
-  <div class="main-news-list" id="main-news-list"></div>
-  <div id="news-view" class="news-view"></div>
-  <script>
-    const githubUser = "bidjadraft";
-    const repo = "Templates-bio";
-    const folder = "_posts";
-    let allNews = [];
-
-    function renderNewsList(news) {
-      let html = news.map((n, i) => `
-        <div class="main-news-item" onclick="showNews('${n.file.name.replace(/'/g, "\\'")}')">
-          <div class="main-news-thumb-wrap">
-            <img class="main-news-thumb" src="${n.image}" alt="صورة الخبر"/>
-            ${n.badge ? `<span class="main-news-badge">${n.badge}</span>` : ""}
-          </div>
-          <div class="main-news-info">
-            <span class="main-news-title">${n.title}</span>
-            <div>
-              <span class="main-news-meta">${n.category}</span>
-              <span class="main-news-date">${n.date}</span>
-            </div>
-          </div>
+  <div class="main-news-list">
+    <div class="main-news-item">
+      <div class="main-news-thumb-wrap">
+        <img class="main-news-thumb" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?fit=crop&w=300&q=80" alt="خبر"/>
+        <span class="main-news-badge">لقب جديد</span>
+      </div>
+      <div class="main-news-info">
+        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-super-cup.md" class="main-news-title" target="_blank">
+          كرة اليد.. مولودية برج بوعريريج تتوج بكأس "السوبر"
+        </a>
+        <div>
+          <span class="main-news-meta">الرياضة</span>
+          <span class="main-news-date">09 ماي</span>
         </div>
-      `).join('');
-      document.getElementById('main-news-list').innerHTML = html;
-      document.getElementById('main-news-list').style.display = 'flex';
-      document.getElementById('news-view').style.display = 'none';
-    }
-
-    // جلب الملفات من GitHub
-    fetch(`https://api.github.com/repos/${githubUser}/${repo}/contents/${folder}`)
-      .then(res => res.json())
-      .then(files => {
-        files = files
-          .filter(file => file.name.endsWith('.md'))
-          .sort((a, b) => b.name.localeCompare(a.name));
-        if (files.length === 0) return;
-
-        Promise.all(files.map(file =>
-          fetch(file.download_url).then(r => r.text()).then(md => ({file, md}))
-        )).then(items => {
-          let news = items.map(({file, md}) => {
-            let title = md.match(/title:\s*["']?(.+?)["']?\s*$/m);
-            let image = md.match(/image:\s*["']?(.+?)["']?\s*$/m);
-            let category = md.match(/category:\s*["']?(.+?)["']?\s*$/m);
-            let badge = md.match(/badge:\s*["']?(.+?)["']?\s*$/m);
-            let date = md.match(/date:\s*["']?(.+?)["']?\s*$/m);
-
-            title = title ? title[1] : file.name.replace('.md', '');
-            image = image ? image[1] : "https://via.placeholder.com/400x200?text=خبر";
-            category = category ? category[1] : "غير مصنف";
-            badge = badge ? badge[1] : "";
-            date = date ? date[1].split('T')[0] : "";
-
-            return {
-              title, image, category, badge, date, file, md
-            };
-          });
-          allNews = news;
-          renderNewsList(news);
-        });
-      });
-
-    // عرض خبر مفرد
-    function showNews(fileName) {
-      let news = allNews.find(n => n.file.name === fileName);
-      if (!news) return;
-      document.getElementById('main-news-list').style.display = 'none';
-      let content = news.md.replace(/^---[\s\S]+?---/, ''); // إزالة front matter
-      let html = `
-        <button class="back-btn" onclick="backToList()">&#8592; عودة للأخبار</button>
-        <h2>${news.title}</h2>
-        <div style="margin-bottom:12px;">
-          <span class="main-news-meta">${news.category}</span>
-          <span class="main-news-date">${news.date}</span>
+      </div>
+    </div>
+    <div class="main-news-item">
+      <div class="main-news-thumb-wrap">
+        <img class="main-news-thumb" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=300&q=80" alt="خبر"/>
+      </div>
+      <div class="main-news-info">
+        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-gouri.md" class="main-news-title" target="_blank">
+          غوري يتحدث عن علاقته بمدربه دي زيربي
+        </a>
+        <div>
+          <span class="main-news-meta">الرياضة</span>
+          <span class="main-news-date">09 ماي</span>
         </div>
-        <img src="${news.image}" alt="صورة الخبر" />
-        <div>${marked.parse(content)}</div>
-      `;
-      document.getElementById('news-view').innerHTML = html;
-      document.getElementById('news-view').style.display = 'block';
-      window.scrollTo(0,0);
-    }
-
-    // عودة للقائمة
-    function backToList() {
-      document.getElementById('news-view').style.display = 'none';
-      document.getElementById('main-news-list').style.display = 'flex';
-      window.scrollTo(0,0);
-    }
-  </script>
+      </div>
+    </div>
+    <div class="main-news-item">
+      <div class="main-news-thumb-wrap">
+        <img class="main-news-thumb" src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=300&q=80" alt="خبر"/>
+      </div>
+      <div class="main-news-info">
+        <a href="https://bidjadraft.github.io/Templates-bio/_posts/2025-05-09-rouissat.md" class="main-news-title" target="_blank">
+          مستقبل الرويسات يحافظ على صدارة القسم الثاني هواة وسط شرق
+        </a>
+        <div>
+          <span class="main-news-meta">الرياضة</span>
+          <span class="main-news-date">09 ماي</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
