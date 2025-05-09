@@ -1,0 +1,12 @@
+title: "موقعي"
+theme: minima   # ثيم جاهز ومناسب لـ GitHub Pages
+markdown: kramdown
+highlighter: rouge
+
+# (اختياري) تضمين ملفات أو مجلدات محددة إذا تحتاج
+# include:
+#   - ملف.md
+
+# (اختياري) استبعاد ملفات أو مجلدات معينة
+# exclude:
+#   - README.md
