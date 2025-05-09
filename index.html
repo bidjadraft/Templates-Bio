@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>أخبار تلقائية من GitHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Cairo", "Segoe UI", "Arial", sans-serif;
+      background: #18181b;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    .main-news-block {
+      max-width: 600px;
+      margin: 32px auto 32px auto;
+    }
+    .main-news-featured {
+      background: #1f1f25;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px #0008;
+      margin-bottom: 18px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-news-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+    .main-news-content {
+      padding: 16px 14px 12px 14px;
+    }
+    .main-news-title {
+      font-size: 1.25em;
+      color: #fff;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      text-decoration: none;
+      display: block;
+      line-height: 1.5;
+      transition: color 0.2s;
+    }
+    .main-news-title:hover {
+      color: #60a5fa;
+    }
+    .main-news-meta {
+      color: #60a5fa;
+      font-size: 1em;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    .main-news-date {
+      color: #a1a1aa;
+      font-size: 0.95em;
+    }
+    .main-news-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.95em;
+      padding: 4px 13px;
+      border-radius: 9px;
+      z-index: 2;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #0003;
+    }
+    .mini-articles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+    }
+    .mini-article-row {
+      display: flex;
+      align-items: flex-start;
+      background: #1f1f25;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #0004;
+      padding: 10px 10px 10px 0;
+      transition: box-shadow 0.2s, transform 0.2s;
+      min-height: 80px;
+    }
+    .mini-article-row:hover {
+      box-shadow: 0 8px 24px #60a5fa22;
+      transform: translateY(-2px) scale(1.01);
+    }
+    .mini-article-thumb-wrap {
+      position: relative;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .mini-article-thumb {
+      width: 110px;
+      min-width: 110px;
+      height: 70px;
+      object-fit: cover;
+      background: #23232a;
+      border-radius: 8px;
+      display: block;
+    }
+    .mini-article-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.85em;
+      padding: 2px 9px;
+      border-radius: 7px;
+      z-index: 2;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #0003;
+    }
+    .mini-article-info {
+      flex: 1;
+      padding: 0 0 0 0;
+      margin-right: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .mini-article-title {
+      font-size: 1.09em;
+      font-weight: 700;
+      color: #e5e7eb;
+      margin: 0 0 6px 0;
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.45;
+      display: block;
+    }
+    .mini-article-title:hover {
+      color: #60a5fa;
+    }
+    .mini-article-meta {
+      font-size: 0.95em;
+      color: #60a5fa;
+      margin-left: 8px;
+      font-weight: 500;
+      display: inline-block;
+    }
+    .mini-article-date {
+      font-size: 0.9em;
+      color: #a1a1aa;
+      font-weight: 400;
+    }
+    @media (max-width: 600px) {
+      .main-news-block {
+        max-width: 100%;
+        padding: 0 4px;
+      }
+      .main-news-img {
+        height: 140px;
+      }
+      .main-news-content {
+        padding: 10px 7px 8px 7px;
+      }
+      .main-news-title {
+        font-size: 1em;
+      }
+      .mini-articles-list {
+        gap: 14px;
+      }
+      .mini-article-row {
+        min-height: 54px;
+        padding: 6px 6px 6px 0;
+      }
+      .mini-article-thumb {
+        width: 70px;
+        min-width: 70px;
+        height: 44px;
+      }
+      .mini-article-info {
+        margin-right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-news-block" id="main-news-block">
+    <!-- سيتم توليد الأخبار تلقائياً هنا -->
+  </div>
+
+  <script>
+    const githubUser = "bidjadraft";
+    const repo = "Templates-bio";
+    const folder = "_posts";
+    // جلب الملفات من GitHub
+    fetch(`https://api.github.com/repos/${githubUser}/${repo}/contents/${folder}`)
+      .then(res => res.json())
+      .then(files => {
+        // ترتيب الأحدث أولاً حسب الاسم (يفترض أن الاسم يبدأ بالتاريخ)
+        files = files
+          .filter(file => file.name.endsWith('.md'))
+          .sort((a, b) => b.name.localeCompare(a.name));
+        if (files.length === 0) return;
+
+        // جلب محتوى كل ملف
+        Promise.all(files.map(file =>
+          fetch(file.download_url).then(r => r.text()).then(md => ({file, md}))
+        )).then(items => {
+          // استخراج بيانات كل خبر
+          let news = items.map(({file, md}) => {
+            let title = md.match(/title:\s*["']?(.+?)["']?\s*$/m);
+            let image = md.match(/image:\s*["']?(.+?)["']?\s*$/m);
+            let category = md.match(/category:\s*["']?(.+?)["']?\s*$/m);
+            let badge = md.match(/badge:\s*["']?(.+?)["']?\s*$/m);
+            let date = md.match(/date:\s*["']?(.+?)["']?\s*$/m);
+
+            title = title ? title[1] : file.name.replace('.md', '');
+            image = image ? image[1] : "https://via.placeholder.com/600x300?text=خبر";
+            category = category ? category[1] : "غير مصنف";
+            badge = badge ? badge[1] : "";
+            date = date ? date[1].split('T')[0] : "";
+
+            return {
+              title, image, category, badge, date, file
+            };
+          });
+
+          // أول خبر رئيسي
+          let first = news[0];
+          let mainHtml = `
+            <div class="main-news-featured">
+              <img class="main-news-img" src="${first.image}" alt="صورة الخبر الرئيسي"/>
+              ${first.badge ? `<span class="main-news-badge">${first.badge}</span>` : ""}
+              <div class="main-news-content">
+                <a href="https://github.com/${githubUser}/${repo}/blob/main/${folder}/${first.file.name}" class="main-news-title" target="_blank">${first.title}</a>
+                <span class="main-news-meta">${first.category}</span>
+                <span class="main-news-date">${first.date}</span>
+              </div>
+            </div>
+          `;
+
+          // باقي الأخبار المصغرة
+          let miniHtml = news.slice(1).map(n => `
+            <div class="mini-article-row">
+              <div class="mini-article-thumb-wrap">
+                <img class="mini-article-thumb" src="${n.image}" alt="صورة الخبر"/>
+                ${n.badge ? `<span class="mini-article-badge">${n.badge}</span>` : ""}
+              </div>
+              <div class="mini-article-info">
+                <a href="https://github.com/${githubUser}/${repo}/blob/main/${folder}/${n.file.name}" class="mini-article-title" target="_blank">${n.title}</a>
+                <div>
+                  <span class="mini-article-meta">${n.category}</span>
+                  <span class="mini-article-date">${n.date}</span>
+                </div>
+              </div>
+            </div>
+          `).join('');
+
+          document.getElementById('main-news-block').innerHTML = mainHtml + `<div class="mini-articles-list">${miniHtml}</div>`;
+        });
+      });
+  </script>
+</body>
+</html>
