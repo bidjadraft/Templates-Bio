@@ -74,7 +74,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-decoration: none; /* إزالة الخط السفلي */
+      text-decoration: none;
     }
     .socials a:hover,
     .socials a:focus {
@@ -82,7 +82,6 @@
       transform: scale(1.2);
       outline: none;
     }
-
     .news-cards-container {
       max-width: 700px;
       margin: 30px auto 0;
@@ -306,7 +305,7 @@
   </footer>
   <script>
     const githubUser = "bidjadraft";
-    const repo = "Templates-Bio";
+    const repo = "Blog";
     const folder = "news";
 
     fetch(`https://api.github.com/repos/${githubUser}/${repo}/contents/${folder}`)
@@ -333,6 +332,7 @@
             badge = badge ? badge[1] : "";
             date = date ? date[1].split('T')[0] : "";
 
+            // هذا هو الرابط الذي يفتح صفحة HTML منسقة للخبر في GitHub Pages
             let pageUrl = `https://${githubUser}.github.io/${repo}/${folder}/${file.name.replace(/\.md$/, "")}`;
 
             return {
