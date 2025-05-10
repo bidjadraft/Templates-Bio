@@ -13,6 +13,9 @@
       background: #18181b;
       color: #e5e7eb;
       line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     header {
       background: #18181b;
@@ -24,6 +27,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 8px #0008;
     }
     .profile {
       display: flex;
@@ -37,6 +41,11 @@
       object-fit: cover;
       border: 2px solid #23232a;
       box-shadow: 0 2px 8px #0003;
+      transition: transform 0.3s ease;
+    }
+    .profile-img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 16px #2563ebaa;
     }
     .username {
       font-size: 1.1em;
@@ -46,44 +55,60 @@
       font-family: "Cairo", "Segoe UI", "Arial", sans-serif;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      user-select: none;
     }
     .username .blue {
       color: #60a5fa;
       font-weight: 700;
+      letter-spacing: 0.05em;
     }
     .socials {
       display: flex;
-      gap: 12px;
+      gap: 16px;
     }
     .socials a {
       color: #a1a1aa;
-      font-size: 1.4em;
-      transition: color 0.2s;
+      font-size: 1.6em;
+      transition: color 0.3s, transform 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none; /* إزالة الخط السفلي */
     }
-    .socials a:hover {
+    .socials a:hover,
+    .socials a:focus {
       color: #60a5fa;
+      transform: scale(1.2);
+      outline: none;
     }
 
     .news-cards-container {
-      max-width: 600px;
-      margin: 20px auto;
+      max-width: 700px;
+      margin: 30px auto 0;
       display: flex;
       flex-direction: column;
-      gap: 24px;
-      padding: 0 6px;
+      gap: 28px;
+      padding: 0 12px;
+      flex-grow: 1;
     }
     .news-card {
       background: #23232a;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 8px 24px #0008;
+      box-shadow: 0 10px 30px #000a;
       display: flex;
       flex-direction: column;
       width: 100%;
       position: relative;
-      min-height: 320px;
-      margin-bottom: 4px;
+      min-height: 340px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .news-card:hover,
+    .news-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px #2563ebbb;
     }
     .news-card-img-wrap {
       position: relative;
@@ -91,6 +116,8 @@
       aspect-ratio: 1080 / 720;
       background: #23232a;
       overflow: hidden;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
     }
     .news-card-img {
       width: 100%;
@@ -98,32 +125,33 @@
       object-fit: cover;
       display: block;
       background: #23232a;
-      border-top-left-radius: 18px;
-      border-top-right-radius: 18px;
-      transition: filter 0.2s;
-      cursor: pointer;
+      transition: filter 0.3s ease;
       position: absolute;
       top: 0;
       left: 0;
     }
-    .news-card-img:hover {
-      filter: brightness(0.85);
+    .news-card:hover .news-card-img,
+    .news-card:focus-within .news-card-img {
+      filter: brightness(0.8);
     }
     .news-card-badge {
       position: absolute;
-      top: 14px;
-      right: 14px;
+      top: 16px;
+      right: 16px;
       background: #2563eb;
       color: #fff;
-      font-size: 1em;
-      padding: 6px 18px;
-      border-radius: 12px;
+      font-size: 1.05em;
+      padding: 8px 22px;
+      border-radius: 14px;
       z-index: 2;
       font-weight: 700;
-      box-shadow: 0 2px 8px #0003;
+      box-shadow: 0 3px 10px #0006;
+      user-select: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
     .news-card-content {
-      padding: 16px 14px 10px 14px;
+      padding: 20px 18px 16px 18px;
       display: flex;
       flex-direction: column;
       flex: 1 1 auto;
@@ -131,84 +159,123 @@
       background: #23232a;
     }
     .news-card-title {
-      font-size: 1.13em;
+      font-size: 1.25em;
       color: #fff;
-      font-weight: 700;
-      margin: 0 0 10px 0;
+      font-weight: 800;
+      margin: 0 0 12px 0;
       text-decoration: none;
       display: block;
-      line-height: 1.6;
-      transition: color 0.2s;
+      line-height: 1.5;
+      transition: color 0.3s ease;
       flex-shrink: 0;
       word-break: break-word;
     }
-    .news-card-title:hover {
+    .news-card-title:hover,
+    .news-card-title:focus {
       color: #60a5fa;
+      outline: none;
+      text-decoration: underline;
     }
     .news-card-meta-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 0;
+      gap: 14px;
+      margin-top: auto;
       flex-wrap: wrap;
     }
     .news-card-meta {
       color: #60a5fa;
-      font-size: 1em;
-      font-weight: 500;
+      font-size: 1.05em;
+      font-weight: 600;
       text-decoration: none;
-      margin-left: 2px;
-      margin-right: 2px;
-      transition: color 0.2s;
+      margin-left: 4px;
+      margin-right: 4px;
+      transition: color 0.3s ease;
+      user-select: none;
     }
-    .news-card-meta:hover {
+    .news-card-meta:hover,
+    .news-card-meta:focus {
       color: #fff;
       text-decoration: underline;
+      outline: none;
+      cursor: default;
     }
     .news-card-date {
       color: #a1a1aa;
-      font-size: 0.98em;
+      font-size: 1em;
       font-weight: 400;
+      user-select: none;
+      letter-spacing: 0.02em;
+    }
+    .copyright {
+      text-align: center;
+      color: #71717a;
+      font-size: 1.05em;
+      padding: 28px 12px 24px 12px;
+      margin-top: 40px;
+      border-top: 1px solid #2c2c36;
+      letter-spacing: 0.06em;
+      font-family: "Cairo", "Segoe UI", "Arial", sans-serif;
+      user-select: none;
+      background: #18181b;
+      transition: color 0.3s ease;
+    }
+    .copyright:hover {
+      color: #60a5fa;
     }
     @media (max-width: 600px) {
       header {
-        padding: 10px 6px;
+        padding: 12px 10px;
       }
       .profile-img {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
       }
       .username {
         font-size: 1em;
+        gap: 4px;
       }
       .news-cards-container {
         max-width: 100%;
-        gap: 14px;
-        padding: 0 2px;
+        gap: 18px;
+        padding: 0 10px;
       }
       .news-card {
         min-width: 100%;
-        min-height: 220px;
+        min-height: 240px;
+        border-radius: 16px;
       }
       .news-card-img-wrap {
-        aspect-ratio: 16/9;
+        aspect-ratio: 16 / 9;
+        border-radius: 16px 16px 0 0;
       }
       .news-card-img {
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
       }
       .news-card-content {
-        padding: 10px 7px 8px 7px;
+        padding: 14px 12px 12px 12px;
       }
       .news-card-title {
-        font-size: 1em;
+        font-size: 1.1em;
       }
       .news-card-badge {
         font-size: 0.95em;
-        padding: 4px 12px;
-        border-radius: 9px;
-        top: 9px;
-        right: 9px;
+        padding: 5px 14px;
+        border-radius: 10px;
+        top: 10px;
+        right: 10px;
+      }
+      .news-card-meta {
+        font-size: 0.95em;
+      }
+      .news-card-date {
+        font-size: 0.9em;
+      }
+      .copyright {
+        font-size: 1em;
+        padding: 20px 10px 16px 10px;
+        margin-top: 30px;
       }
     }
   </style>
@@ -225,14 +292,18 @@
     </div>
     <nav aria-label="روابط التواصل الاجتماعي" class="socials">
       <a href="#" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="#" title="تويتر" aria-label="تويتر"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="#" title="Discord" aria-label="Discord"><i class="fab fa-discord"></i></a>
-      <a href="#" title="Reddit" aria-label="Reddit"><i class="fab fa-reddit"></i></a>
+      <a href="#" title="يوتيوب" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+      <a href="#" title="تلغرام" aria-label="تلغرام"><i class="fab fa-telegram"></i></a>
     </nav>
   </header>
-  <div class="news-cards-container" id="news-cards-container">
+  <main class="news-cards-container" id="news-cards-container" tabindex="-1" aria-live="polite" aria-label="أخبار تلقائية">
     <!-- سيتم توليد الكروت تلقائياً هنا -->
-  </div>
+  </main>
+  <footer>
+    <div class="copyright" role="contentinfo" aria-label="حقوق الطبع والنشر">
+      &copy; بجاد الأثري حقوق الطبع و النشر
+    </div>
+  </footer>
   <script>
     const githubUser = "bidjadraft";
     const repo = "Templates-Bio";
@@ -269,20 +340,30 @@
             };
           });
 
+          // ضع العلامة (badge) فقط على أول منشور (الأحدث)
+          news = news.map((n, i) => {
+            if (i === 0) {
+              if (!n.badge) n.badge = "جديد";
+            } else {
+              n.badge = "";
+            }
+            return n;
+          });
+
           let html = news.map(n => `
-            <div class="news-card">
+            <article class="news-card" tabindex="0" role="region" aria-label="خبر: ${n.title}">
               <div class="news-card-img-wrap">
-                <img class="news-card-img" src="${n.image}" alt="صورة الخبر" />
+                <img class="news-card-img" src="${n.image}" alt="صورة الخبر: ${n.title}" />
                 ${n.badge ? `<span class="news-card-badge">${n.badge}</span>` : ""}
               </div>
               <div class="news-card-content">
-                <a href="${n.pageUrl}" class="news-card-title" target="_blank">${n.title}</a>
+                <a href="${n.pageUrl}" class="news-card-title" target="_blank" rel="noopener noreferrer" aria-describedby="date-${n.title.replace(/\s+/g, '-')}">${n.title}</a>
                 <div class="news-card-meta-row">
-                  <a href="#" class="news-card-meta" tabindex="-1">${n.category}</a>
-                  <span class="news-card-date">${n.date}</span>
+                  <span class="news-card-meta" tabindex="-1">${n.category}</span>
+                  <time id="date-${n.title.replace(/\s+/g, '-')}" class="news-card-date" datetime="${n.date}">${n.date}</time>
                 </div>
               </div>
-            </div>
+            </article>
           `).join('');
 
           document.getElementById('news-cards-container').innerHTML = html;
