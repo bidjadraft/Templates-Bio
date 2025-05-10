@@ -14,95 +14,188 @@
       color: #e5e7eb;
       line-height: 1.6;
     }
-    .news-cards-container {
-      max-width: 800px;
-      margin: 32px auto;
+    header {
+      background: #18181b;
+      padding: 16px 18px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #23232a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .profile-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #23232a;
+      box-shadow: 0 2px 8px #0003;
+    }
+    .username {
+      font-size: 1.1em;
+      color: #e5e7eb;
+      font-weight: 700;
+      margin-left: 10px;
+      font-family: "Cairo", "Segoe UI", "Arial", sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .username .blue {
+      color: #60a5fa;
+      font-weight: 700;
+    }
+    .socials {
+      display: flex;
+      gap: 12px;
+    }
+    .socials a {
+      color: #a1a1aa;
+      font-size: 1.4em;
+      transition: color 0.2s;
+    }
+    .socials a:hover {
+      color: #60a5fa;
+    }
+
+    .news-cards-container {
+      max-width: 600px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 0 6px;
     }
     .news-card {
-      background: #1f1f25;
-      border-radius: 16px;
+      background: #23232a;
+      border-radius: 18px;
       overflow: hidden;
       box-shadow: 0 8px 24px #0008;
       display: flex;
       flex-direction: column;
       width: 100%;
-      max-width: 500px;
-      min-width: 320px;
-      flex: 1 1 350px;
-      min-height: 420px;
       position: relative;
-      transition: box-shadow 0.2s, transform 0.2s;
+      min-height: 320px;
+      margin-bottom: 4px;
     }
-    .news-card:hover {
-      box-shadow: 0 12px 32px #2563eb55;
-      transform: translateY(-3px) scale(1.02);
+    .news-card-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1080 / 720;
+      background: #23232a;
+      overflow: hidden;
     }
     .news-card-img {
       width: 100%;
-      height: 220px;
+      height: 100%;
       object-fit: cover;
       display: block;
       background: #23232a;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      transition: filter 0.2s;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .news-card-img:hover {
+      filter: brightness(0.85);
     }
     .news-card-badge {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 14px;
+      right: 14px;
       background: #2563eb;
       color: #fff;
-      font-size: 0.95em;
-      padding: 4px 13px;
-      border-radius: 9px;
+      font-size: 1em;
+      padding: 6px 18px;
+      border-radius: 12px;
       z-index: 2;
       font-weight: 700;
       box-shadow: 0 2px 8px #0003;
     }
     .news-card-content {
-      padding: 18px 16px 12px 16px;
+      padding: 16px 14px 10px 14px;
       display: flex;
       flex-direction: column;
       flex: 1 1 auto;
+      justify-content: flex-start;
+      background: #23232a;
     }
     .news-card-title {
-      font-size: 1.23em;
+      font-size: 1.13em;
       color: #fff;
       font-weight: 700;
-      margin: 0 0 8px 0;
+      margin: 0 0 10px 0;
       text-decoration: none;
       display: block;
-      line-height: 1.5;
+      line-height: 1.6;
       transition: color 0.2s;
       flex-shrink: 0;
+      word-break: break-word;
     }
     .news-card-title:hover {
       color: #60a5fa;
+    }
+    .news-card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 0;
+      flex-wrap: wrap;
     }
     .news-card-meta {
       color: #60a5fa;
       font-size: 1em;
       font-weight: 500;
-      margin-left: 8px;
+      text-decoration: none;
+      margin-left: 2px;
+      margin-right: 2px;
+      transition: color 0.2s;
+    }
+    .news-card-meta:hover {
+      color: #fff;
+      text-decoration: underline;
     }
     .news-card-date {
       color: #a1a1aa;
-      font-size: 0.95em;
+      font-size: 0.98em;
+      font-weight: 400;
     }
     @media (max-width: 600px) {
+      header {
+        padding: 10px 6px;
+      }
+      .profile-img {
+        width: 36px;
+        height: 36px;
+      }
+      .username {
+        font-size: 1em;
+      }
       .news-cards-container {
+        max-width: 100%;
         gap: 14px;
-        padding: 0 4px;
+        padding: 0 2px;
       }
       .news-card {
         min-width: 100%;
-        max-width: 100%;
-        min-height: 300px;
+        min-height: 220px;
+      }
+      .news-card-img-wrap {
+        aspect-ratio: 16/9;
       }
       .news-card-img {
-        height: 120px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
       }
       .news-card-content {
         padding: 10px 7px 8px 7px;
@@ -110,14 +203,36 @@
       .news-card-title {
         font-size: 1em;
       }
+      .news-card-badge {
+        font-size: 0.95em;
+        padding: 4px 12px;
+        border-radius: 9px;
+        top: 9px;
+        right: 9px;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="profile">
+      <img
+        class="profile-img"
+        src="https://randomuser.me/api/portraits/men/32.jpg"
+        alt="Profile"
+      />
+      <div class="username"><span>بجاد</span> <span class="blue">الأثري</span></div>
+    </div>
+    <nav aria-label="روابط التواصل الاجتماعي" class="socials">
+      <a href="#" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" title="تويتر" aria-label="تويتر"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" title="Discord" aria-label="Discord"><i class="fab fa-discord"></i></a>
+      <a href="#" title="Reddit" aria-label="Reddit"><i class="fab fa-reddit"></i></a>
+    </nav>
+  </header>
   <div class="news-cards-container" id="news-cards-container">
     <!-- سيتم توليد الكروت تلقائياً هنا -->
   </div>
-
   <script>
     const githubUser = "bidjadraft";
     const repo = "Templates-Bio";
@@ -142,7 +257,7 @@
             let date = md.match(/date:\s*["']?(.+?)["']?\s*$/m);
 
             title = title ? title[1] : file.name.replace('.md', '');
-            image = image ? image[1] : "https://via.placeholder.com/600x300?text=خبر";
+            image = image ? image[1] : "https://via.placeholder.com/1080x720?text=خبر";
             category = category ? category[1] : "غير مصنف";
             badge = badge ? badge[1] : "";
             date = date ? date[1].split('T')[0] : "";
@@ -156,12 +271,14 @@
 
           let html = news.map(n => `
             <div class="news-card">
-              <img class="news-card-img" src="${n.image}" alt="صورة الخبر"/>
-              ${n.badge ? `<span class="news-card-badge">${n.badge}</span>` : ""}
+              <div class="news-card-img-wrap">
+                <img class="news-card-img" src="${n.image}" alt="صورة الخبر" />
+                ${n.badge ? `<span class="news-card-badge">${n.badge}</span>` : ""}
+              </div>
               <div class="news-card-content">
                 <a href="${n.pageUrl}" class="news-card-title" target="_blank">${n.title}</a>
-                <div>
-                  <span class="news-card-meta">${n.category}</span>
+                <div class="news-card-meta-row">
+                  <a href="#" class="news-card-meta" tabindex="-1">${n.category}</a>
                   <span class="news-card-date">${n.date}</span>
                 </div>
               </div>
